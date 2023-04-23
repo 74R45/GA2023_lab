@@ -1,0 +1,4 @@
+*.pyo
+*.pyc
+out
+out_100
