@@ -1,7 +1,7 @@
 from multiprocessing import cpu_count
 
 # environment parameters
-env = 'test'
+env = 'prod'
 THREADS = cpu_count()
 
 # run parameters
