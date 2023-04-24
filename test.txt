@@ -1,8 +1,0 @@
-2023-04-22 20:28:26.50 | Program start
-----------------------------------------------------------------------
-2023-04-22 20:29:11.90 | Experiment (F5122subx2|RWS_disruptive|crossover) finished
-2023-04-22 20:29:12.14 | F5122subx2 experiments finished in 45.65s
-2023-04-22 20:30:13.58 | Experiment (F5122subx2_gray|RWS_disruptive|crossover) finished
-2023-04-22 20:30:13.72 | F5122subx2_gray experiments finished in 61.58s
-----------------------------------------------------------------------
-2023-04-22 20:30:13.80 | Program end. Total runtime: 107.30s
