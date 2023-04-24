@@ -154,6 +154,7 @@ def __get_distribution(data, x_min=0, x_max=None, x_step=1):
 def __get_path_hierarchy(param_names, run_i):
     return [
         OUTPUT_FOLDER,
+        'graphs',
         param_names[0], # fitness function
         str(N),
         param_names[1], # selection method

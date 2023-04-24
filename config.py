@@ -1,13 +1,13 @@
 from multiprocessing import cpu_count
 
 # environment parameters
-env = 'prod'
+env = 'test'
 THREADS = cpu_count()
 
 # run parameters
 N = 100
 G = 5000
-NR = 3 if env == 'test' else 100
+NR = 100 if env == 'test' else 100
 
 # convergence parameters
 EPS = 0.0001
@@ -21,7 +21,7 @@ get_pop_seed = lambda run_i: 1381*run_i + 5912826
 # output parameters
 DISTRIBUTIONS_TO_PLOT = 5
 RUNS_TO_PLOT = 5
-OUTPUT_FOLDER = 'out'
+OUTPUT_FOLDER = 'test_out' if env == 'test' else 'out'
 RUN_STATS_NAMES = [
     'NI', 'F_found', 'F_avg',
     'RR_min', 'NI_RR_min', 'RR_max', 'NI_RR_max', 'RR_avg',
@@ -31,7 +31,7 @@ RUN_STATS_NAMES = [
     'GR_early', 'GR_late', 'NI_GR_late', 'GR_avg'
 ]
 EXP_STATS_NAMES = [
-    'Min_NI', 'Max_NI', 'Avg_NI', 'Sigma_NI',
+    'Suc', 'N_Suc', 'Min_NI', 'Max_NI', 'Avg_NI', 'Sigma_NI',
     
     'Min_RR_min', 'NI_RR_min', 'Max_RR_max', 'NI_RR_max',
     'Avg_RR_min', 'Avg_RR_max', 'Avg_RR_avg',
@@ -50,9 +50,7 @@ EXP_STATS_NAMES = [
     
     'Min_GR_early', 'Max_GR_early', 'Avg_GR_early',
     'Min_GR_late', 'Max_GR_late', 'Avg_GR_late',
-    'Min_GR_avg', 'Max_GR_avg', 'Avg_GR_avg',
-
-    'N_Suc', 'Suc'
+    'Min_GR_avg', 'Max_GR_avg', 'Avg_GR_avg'
 ]
 FCONSTALL_RUN_STATS_NAMES = [
     'NI',
@@ -60,7 +58,7 @@ FCONSTALL_RUN_STATS_NAMES = [
     'Teta_min', 'NI_Teta_min', 'Teta_max', 'NI_Teta_max', 'Teta_avg'
 ]
 FCONSTALL_EXP_STATS_NAMES = [
-    'Min_NI', 'Max_NI', 'Avg_NI', 'Sigma_NI',
+    'Suc', 'N_Suc', 'Min_NI', 'Max_NI', 'Avg_NI', 'Sigma_NI',
     
     'Min_RR_min', 'NI_RR_min', 'Max_RR_max', 'NI_RR_max',
     'Avg_RR_min', 'Avg_RR_max', 'Avg_RR_avg',
@@ -68,7 +66,5 @@ FCONSTALL_EXP_STATS_NAMES = [
 
     'Min_Teta_min', 'NI_Teta_min', 'Max_Teta_max', 'NI_Teta_max',
     'Avg_Teta_min', 'Avg_Teta_max', 'Avg_Teta_avg',
-    'Sigma_Teta_min', 'Sigma_Teta_max', 'Sigma_Teta_avg',
-
-    'N_Suc', 'Suc'
+    'Sigma_Teta_min', 'Sigma_Teta_max', 'Sigma_Teta_avg'
 ]

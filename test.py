@@ -6,15 +6,13 @@ from selection.rws import *
 from model.gen_operators import *
 import time
 from evo_algorithm import EvoAlgorithm
-import multiprocessing
 
 if __name__ == '__main__': 
-    # ff = FconstALL(100)
-    # pop = ff.generate_population_for_run(0)
-    # start = time.time()
-    # EvoAlgorithm(
-    #     pop,
-    #     DisruptiveRWS(), CrossoverAndMutation, ('FconstALL', 'SUS', 'no_gen_op')).run(0)
-    # end = time.time()
-    # print(f'Total: {(end - start):.2f}s.')
-    print(multiprocessing.cpu_count())
+    ff = F5122subx2(FloatEncoder(-5.12, 5.11, 10, is_gray=True))
+    pop = ff.generate_population_for_run(0)
+    start = time.time()
+    EvoAlgorithm(
+        pop,
+        DisruptiveRWS(), CrossoverAndMutation, ('FconstALL', 'SUS', 'no_gen_op')).run(0)
+    end = time.time()
+    print(f'Total: {(end - start):.2f}s.')

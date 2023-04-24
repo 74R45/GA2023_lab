@@ -5,7 +5,7 @@ from stats.experiment_stats import ExperimentStats
 
 def write_ff_stats(experiment_stats_list: list[ExperimentStats]):
     ff_name = experiment_stats_list[0].params[0]
-    path = f'{OUTPUT_FOLDER}/{ff_name}/{N}'
+    path = f'{OUTPUT_FOLDER}/tables/{ff_name}'
     filename = f'{ff_name}_{N}.xlsx'
 
     if ff_name == 'FconstALL':
@@ -60,7 +60,7 @@ def write_ff_stats(experiment_stats_list: list[ExperimentStats]):
     
 
 def write_aggregated_stats(experiment_stats_list: list[ExperimentStats]):
-    path = OUTPUT_FOLDER
+    path = f'{OUTPUT_FOLDER}/tables'
     filename = f'aggregated_{N}.xlsx'
 
     if not os.path.exists(path):

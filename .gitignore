@@ -2,3 +2,6 @@
 *.pyc
 out
 out_100
+submit
+test*
+test.*
