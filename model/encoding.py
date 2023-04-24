@@ -9,14 +9,14 @@ class Encoder:
 
     def decode(self, encoded):
         raise NotImplementedError()
+    
+    def get_all_values(self):
+        raise NotImplementedError()
 
 class BinaryEncoder(Encoder):
     def __init__(self, length):
         self.length: int = length
         self.d: dict[bytes, int] = {}
-        for v in range(2**length):
-            encoded = self.encode(v).tobytes()
-            self.d[encoded] = v
 
     def encode(self, num):
         encoded_str = bin(num)[2:]
@@ -25,15 +25,14 @@ class BinaryEncoder(Encoder):
         return encoded
     
     def decode(self, encoded):
-        return self.d[encoded.tobytes()]
+        return int(encoded.tobytes(), 2)
+    
+    def get_all_values(self):
+        return [self.encode(v) for v in range(2**self.length)]
 
 class GrayEncoder(Encoder):
     def __init__(self, length):
         self.length: int = length
-        self.d: dict[bytes, int] = {}
-        for v in range(2**length):
-            encoded = self.encode(v).tobytes()
-            self.d[encoded] = v
     
     def encode(self, num):
         num ^= (num >> 1)
@@ -43,7 +42,16 @@ class GrayEncoder(Encoder):
         return encoded
     
     def decode(self, encoded):
-        return self.d[encoded.tobytes()]
+        decoded = int(encoded.tobytes(), 2)
+        decoded ^= decoded >> 16
+        decoded ^= decoded >> 8
+        decoded ^= decoded >> 4
+        decoded ^= decoded >> 2
+        decoded ^= decoded >> 1
+        return decoded
+    
+    def get_all_values(self):
+        return [self.encode(v) for v in range(2**self.length)]
 
 class FloatEncoder(Encoder):
     def __init__(self, lower_bound, upper_bound, length, is_gray=False):
@@ -67,6 +75,9 @@ class FloatEncoder(Encoder):
         n = self.sub_encoder.decode(encoded)
         decoded = round(self.lower_bound + n * self.__decoding_multiplier, 2)
         return decoded
+    
+    def get_all_values(self):
+        return self.sub_encoder.get_all_values()
 
 
 # Testing

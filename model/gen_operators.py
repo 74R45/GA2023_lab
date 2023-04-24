@@ -21,8 +21,6 @@ class BlankGenOperator(GeneticOperator):
 class Crossover(GeneticOperator):
     @staticmethod
     def apply(population: Population):
-        # mating_pool = deepcopy(population.chromosomes)
-        # np.random.shuffle(mating_pool)
         children = np.empty(N, dtype=object)
         l = population.fitness_function.chr_length
 
@@ -63,8 +61,6 @@ class Mutation(GeneticOperator):
 class CrossoverAndMutation(GeneticOperator):
     @staticmethod
     def apply(population: Population):
-        #mating_pool = deepcopy(population.chromosomes)
-        # np.random.shuffle(mating_pool)
         children = np.empty(N, dtype=object)
         l = population.fitness_function.chr_length
         p_m = get_p_m(l)

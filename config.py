@@ -1,13 +1,11 @@
-from multiprocessing import cpu_count
-
 # environment parameters
 env = 'test'
-THREADS = cpu_count()
+THREADS = 10
 
 # run parameters
 N = 100
-G = 5000
-NR = 100 if env == 'test' else 100
+G = 2500
+NR = 20 if env == 'test' else 100
 
 # convergence parameters
 EPS = 0.0001

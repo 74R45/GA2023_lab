@@ -5,9 +5,6 @@ from copy import copy
 
 
 class RWS(SelectionMethod):
-    def initialize(self):
-        pass
-
     def select(self, population):
         fitness_list = population.fitnesses
         fitness_sum = sum(fitness_list)
@@ -23,9 +20,6 @@ class RWS(SelectionMethod):
 
 
 class DisruptiveRWS(SelectionMethod):
-    def initialize(self):
-        pass
-
     def select(self, population):
         f_avg = population.get_fitness_avg()
         f_scaled = [abs(fitness - f_avg) for fitness in population.fitnesses]
@@ -43,9 +37,6 @@ class DisruptiveRWS(SelectionMethod):
 
 class BlendedRWS(SelectionMethod):
     def __init__(self):
-        self.initialize()
-
-    def initialize(self):
         self.i = 0
 
     def select(self, population):
@@ -65,11 +56,8 @@ class BlendedRWS(SelectionMethod):
 
 
 class WindowRWS(SelectionMethod):
-    def __init__(self, h):
+    def __init__(self, h=2):
         self.h = h
-        self.initialize()
-
-    def initialize(self):
         self.f_h_worst = []
 
     def select(self, population):
@@ -94,9 +82,6 @@ class WindowRWS(SelectionMethod):
 
 class MyBlendedRWS(SelectionMethod):
     def __init__(self):
-        self.initialize()
-
-    def initialize(self):
         self.i = 0
 
     def select(self, population):

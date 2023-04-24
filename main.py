@@ -1,5 +1,4 @@
-from multiprocessing import Pool
-from config import env, NR, THREADS
+from config import env, NR
 from model.fitness_functions import *
 from selection.rws import *
 from selection.sus import *
@@ -9,18 +8,15 @@ from output import excel
 from runner import run_experiment
 from datetime import datetime
 import time
-import gc
 
 if env == 'test':
     fitness_functions = [
-        (F5122subx2(FloatEncoder(-5.12, 5.11, 10, is_gray=True)), 'F5122subx2_gray')
+        (Fexp(2, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp2_gray')
     ]
     selection_methods = [
-        (RWS(), 'RWS'),
-        (SUS(), 'SUS')
+        (SUS, 'SUS')
     ]
     gen_operators = [
-        (BlankGenOperator, 'no_gen_op'),
         (CrossoverAndMutation, 'xover_mut')
     ]
 else:
@@ -39,14 +35,14 @@ else:
         (Fexp(2, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp2_gray')
     ]
     selection_methods = [
-        (RWS(), 'RWS'),
-        (DisruptiveRWS(), 'RWS_disruptive'),
-        (BlendedRWS(), 'RWS_blended'),
-        (WindowRWS(2), 'RWS_window'),
-        (SUS(), 'SUS'),
-        (DisruptiveSUS(), 'SUS_disruptive'),
-        (BlendedSUS(), 'SUS_blended'),
-        (WindowSUS(2), 'SUS_window')
+        (RWS, 'RWS'),
+        (DisruptiveRWS, 'RWS_disruptive'),
+        (BlendedRWS, 'RWS_blended'),
+        (WindowRWS, 'RWS_window'),
+        (SUS, 'SUS'),
+        (DisruptiveSUS, 'SUS_disruptive'),
+        (BlendedSUS, 'SUS_blended'),
+        (WindowSUS, 'SUS_window')
     ]
     gen_operators = [
         (BlankGenOperator, 'no_gen_op'),
@@ -83,22 +79,7 @@ if __name__ == '__main__':
         ff_start_time = time.time()
         populations = generate_all_populations_for_fitness_function(ff)
         params = [params + (populations,) for params in experiment_params[ff]]
-        experiment_stats_list = []
-
-        for i in range(len(params) // THREADS):
-            with Pool(THREADS) as p:
-                res = p.starmap(run_experiment, params[i*THREADS:(i+1)*THREADS])
-                for stats in res:
-                    experiment_stats_list.append(stats)
-            gc.collect()
-
-        if len(params) % THREADS != 0:
-            n_last = len(params) % THREADS
-            with Pool(n_last) as p:
-                res = p.starmap(run_experiment, params[-n_last:])
-                for stats in res:
-                    experiment_stats_list.append(stats)
-            gc.collect()
+        experiment_stats_list = [run_experiment(*p) for p in params]
 
         excel.write_ff_stats(experiment_stats_list)
         for experiment_stats in experiment_stats_list:

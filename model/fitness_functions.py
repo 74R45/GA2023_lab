@@ -10,7 +10,7 @@ class FitnessFunc:
     def __init__(self, chr_length):
         self.chr_length = chr_length
         self.optimal = None
-        
+
     def apply(self, genotype):
         raise NotImplementedError()
 
@@ -65,10 +65,17 @@ class FHD(FitnessFunc):
 
 class Fx2(FitnessFunc):
     def __init__(self, encoder: Encoder):
+        super().__init__(encoder.length)
         self.encoder = encoder
-        super().__init__(self.encoder.length)
+        self.is_caching = encoder.length <= 12
+        self.cache_dict = {}
+        if self.is_caching:
+            for v in self.encoder.get_all_values():
+                self.cache_dict[v.tobytes()] = self.encoder.decode(v)**2
 
     def apply(self, genotype):
+        if self.is_caching:
+            return self.cache_dict[genotype.tobytes()]
         return self.encoder.decode(genotype)**2
 
     def get_optimal(self):
@@ -83,10 +90,17 @@ class Fx2(FitnessFunc):
 
 class F5122subx2(FitnessFunc):
     def __init__(self, encoder: Encoder):
+        super().__init__(encoder.length)
         self.encoder = encoder
-        super().__init__(self.encoder.length)
+        self.is_caching = encoder.length <= 12
+        self.cache_dict = {}
+        if self.is_caching:
+            for v in self.encoder.get_all_values():
+                self.cache_dict[v.tobytes()] = 5.12**2 - self.encoder.decode(v)**2
     
     def apply(self, genotype):
+        if self.is_caching:
+            return self.cache_dict[genotype.tobytes()]
         return 5.12**2 - self.encoder.decode(genotype)**2
 
     def get_optimal(self):
@@ -100,11 +114,18 @@ class F5122subx2(FitnessFunc):
     
 class Fexp(FitnessFunc):
     def __init__(self, c, encoder: Encoder):
-        self.encoder = encoder
         self.c = c
-        super().__init__(self.encoder.length)
+        super().__init__(encoder.length)
+        self.encoder = encoder
+        self.is_caching = encoder.length <= 12
+        self.cache_dict = {}
+        if self.is_caching:
+            for v in self.encoder.get_all_values():
+                self.cache_dict[v.tobytes()] = exp(self.c * self.encoder.decode(v))
 
     def apply(self, genotype):
+        if self.is_caching:
+            return self.cache_dict[genotype.tobytes()]
         return exp(self.c * self.encoder.decode(genotype))
 
     def get_optimal(self):

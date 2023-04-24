@@ -5,7 +5,7 @@ import numpy as np
 class ExperimentStats:
     def __init__(self, experiment_params: tuple[str]):
         self.params = experiment_params
-        self.runs: list[RunStats] = []
+        self.runs = np.empty(NR, dtype=object)
 
         self.Suc = 0
         self.N_Suc = 0
@@ -70,8 +70,8 @@ class ExperimentStats:
         self.Max_GR_avg = None
         self.Avg_GR_avg = None
 
-    def add_run(self, run: RunStats):
-        self.runs.append(run)
+    def add_run(self, run: RunStats, run_i):
+        self.runs[run_i] = run
 
     def calculate(self):
         successful_runs = [run for run in self.runs if run.is_successful]

@@ -6,9 +6,6 @@ from copy import copy
 
 
 class SUS(SelectionMethod):
-    def initialize(self):
-        pass
-    
     def select(self, population: Population):
         fitness_sum = 0
         fitness_scale = []
@@ -51,9 +48,6 @@ class SUS(SelectionMethod):
 
 
 class DisruptiveSUS(SelectionMethod):
-    def initialize(self):
-        pass
-    
     def select(self, population: Population):
         fitness_sum = 0
         fitness_scale = []
@@ -77,9 +71,6 @@ class DisruptiveSUS(SelectionMethod):
 
 class BlendedSUS(SelectionMethod):
     def __init__(self):
-        self.initialize()
-
-    def initialize(self):
         self.i = 0
 
     def select(self, population: Population):
@@ -105,11 +96,8 @@ class BlendedSUS(SelectionMethod):
 
 
 class WindowSUS(SelectionMethod):
-    def __init__(self, h):
+    def __init__(self, h=2):
         self.h = h
-        self.initialize()
-
-    def initialize(self):
         self.f_h_worst = []
 
     def select(self, population: Population):
@@ -140,9 +128,6 @@ class WindowSUS(SelectionMethod):
 
 class MyBlendedSUS(SelectionMethod):
     def __init__(self):
-        self.initialize()
-
-    def initialize(self):
         self.i = 0
 
     def select(self, population: Population):
