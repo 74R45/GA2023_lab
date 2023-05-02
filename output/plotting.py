@@ -97,8 +97,10 @@ def __plot_fitness_distribution(
     if not os.path.exists(path):
         os.makedirs(path)
 
-    (x, y) = __get_distribution(population.fitnesses, x_max=population.fitness_function.get_optimal().fitness)
-    plt.bar(x, y)
+    x_max = population.fitness_function.get_optimal().fitness
+    x_step = x_max / 100
+    (x, y) = __get_distribution(population.fitnesses, x_max=x_max, x_step=x_step)
+    plt.bar(x, y, width=x_step*0.8)
     plt.xlabel('Chromosome fitness')
     plt.ylabel('Number of chromosomes')
     plt.savefig(f'{path}/{gen_i}.png')
@@ -118,7 +120,7 @@ def __plot_phenotype_distribution(
     encoder = population.fitness_function.encoder
     x_min = encoder.lower_bound
     x_max = encoder.upper_bound
-    x_step = 0.1599999
+    x_step = (x_max - x_min) / 100
     (x, y) = __get_distribution(phenotypes, x_min=x_min, x_max=x_max, x_step=x_step)
     plt.bar(x, y, width=x_step*0.8)
     plt.xlabel('Chromosome phenotype')
@@ -147,8 +149,9 @@ def __plot_genotype_distribution(
 def __get_distribution(data, x_min=0, x_max=None, x_step=1):
     if x_max is None:
         x_max = max(data)
+
     x = np.arange(x_min, x_max + x_step, x_step)
-    count = lambda arr, x: len([True for el in arr if el >= (x - x_step/2) and el <= (x + x_step/2)])
+    count = lambda arr, x: len([True for el in arr if (x - x_step/2) <= el <= (x + x_step/2)])
     y = [count(data, value) for value in x]
     return (x, y)
 
