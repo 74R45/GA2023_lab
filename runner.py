@@ -16,8 +16,7 @@ def run_experiment(selection_method: SelectionMethod,
     stats = ExperimentStats(param_names)
 
     run_param_list = [
-        (stats,
-         populations[run_i],
+        (populations[run_i],
          selection_method,
          genetic_operator,
          param_names,
@@ -42,8 +41,7 @@ def run_experiment(selection_method: SelectionMethod,
     gc.collect()
     return stats
 
-def run(exp_stats: ExperimentStats,
-        init_population: Population,
+def run(init_population: Population,
         selection_method: SelectionMethod,
         genetic_operator: GeneticOperator,
         param_names: tuple[str],

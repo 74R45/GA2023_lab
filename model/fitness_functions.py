@@ -97,7 +97,7 @@ class F5122subx2(FitnessFunc):
         if self.is_caching:
             for v in self.encoder.get_all_values():
                 self.cache_dict[v.tobytes()] = 5.12**2 - self.encoder.decode(v)**2
-    
+
     def apply(self, genotype):
         if self.is_caching:
             return self.cache_dict[genotype.tobytes()]
