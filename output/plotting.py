@@ -43,9 +43,10 @@ def plot_generation_stats(
         param_names: tuple[str],
         run_i, gen_i):
     __plot_genotype_distribution(population, param_names, run_i, gen_i)
+    if param_names[0] != 'FconstALL':
+        __plot_fitness_distribution(population, param_names, run_i, gen_i)
     if param_names[0] not in ['FconstALL', 'FHD']:
         __plot_phenotype_distribution(population, param_names, run_i, gen_i)
-        __plot_fitness_distribution(population, param_names, run_i, gen_i)
 
 
 def __plot_stat(
