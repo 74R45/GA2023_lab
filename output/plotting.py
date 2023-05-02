@@ -151,8 +151,12 @@ def __get_distribution(data, x_min=0, x_max=None, x_step=1):
         x_max = max(data)
 
     x = np.arange(x_min, x_max + x_step, x_step)
-    count = lambda arr, x: len([True for el in arr if (x - x_step/2) <= el <= (x + x_step/2)])
-    y = [count(data, value) for value in x]
+    y = np.zeros_like(x)
+    for val in data:
+        idx = int(round((val - x_min) / x_step))
+        idx = max(0, min(idx, len(x)-1))
+        y[idx] += 1
+
     return (x, y)
 
 def __get_path_hierarchy(param_names, run_i):
