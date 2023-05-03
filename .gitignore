@@ -1,7 +1,8 @@
 *.pyo
 *.pyc
+*.log
 out
-out_100
+out_*
 submit
 test*
 test.*
