@@ -36,6 +36,8 @@ def plot_run_stats(
         __plot_stat(optimal_counts, param_names, run_i, 'Number of Optimal Chromosomes', 'optimal_count')
 
         growth_rates = [gen_stats.growth_rate for gen_stats in gen_stats_list]
+        if len(growth_rates) > 0:
+            growth_rates = growth_rates[1:]
         __plot_stat(growth_rates, param_names, run_i, 'Growth Rate', 'growth_rate')
 
 def plot_generation_stats(

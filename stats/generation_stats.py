@@ -29,7 +29,7 @@ class GenerationStats:
             self.optimal_count = self.population.count_optimal_genotype()
             
             if not prev_gen_stats:
-                self.growth_rate = 0
+                self.growth_rate = 1
             else:
                 num_of_prev_best = self.population.count_fitness_at_least(prev_gen_stats.f_best)
                 self.growth_rate = num_of_prev_best / prev_gen_stats.num_of_best
