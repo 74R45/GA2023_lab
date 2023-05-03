@@ -26,6 +26,7 @@ def write_ff_stats(experiment_stats_list: list[ExperimentStats]):
         'border': 1,
         'align': 'center',
         'fg_color': 'yellow'})
+    worksheet.freeze_panes(2, 2)
     
     for exp_i, experiment_stats in enumerate(experiment_stats_list):
         row = exp_i + 2
@@ -69,6 +70,7 @@ def write_aggregated_stats(experiment_stats_list: list[ExperimentStats]):
     workbook = xlsxwriter.Workbook(f'{path}/{filename}')
     worksheet = workbook.add_worksheet()
     worksheet.name = 'aggregated'
+    worksheet.freeze_panes(1, 3)
 
     for exp_i, experiment_stats in enumerate(experiment_stats_list):
         if exp_i == 0:
