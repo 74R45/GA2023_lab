@@ -11,22 +11,43 @@ import time
 
 if env == 'test':
     fitness_functions = [
-        (Fexp(2, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp2_gray')
+        (FconstALL(100), 'FconstALL'),
+        (FHD(100, 100), 'FHD'),
+        (Fx2(FloatEncoder(0.0, 10.23, 10)), 'Fx2'),
+        (Fx2(FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fx2_gray'),
+        (F5122subx2(FloatEncoder(-5.12, 5.11, 10)), 'F5122subx2'),
+        (F5122subx2(FloatEncoder(-5.12, 5.11, 10, is_gray=True)), 'F5122subx2_gray'),
+        # (Fexp(0.25, FloatEncoder(0.0, 10.23, 10)), 'Fexp0.25'),
+        # (Fexp(0.25, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp0.25_gray'),
+        # (Fexp(1, FloatEncoder(0.0, 10.23, 10)), 'Fexp1'),
+        # (Fexp(1, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp1_gray'),
+        (Fexp(2, FloatEncoder(0.0, 10.23, 10)), 'Fexp2'),
+        # (Fexp(2, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp2_gray')
     ]
     selection_methods = [
-        (SUS, 'SUS')
+        (RWS, 'RWS'),
+        (DisruptiveRWS, 'RWS_disruptive'),
+        (BlendedRWS, 'RWS_blended'),
+        (WindowRWS, 'RWS_window'),
+        (SUS, 'SUS'),
+        (DisruptiveSUS, 'SUS_disruptive'),
+        (BlendedSUS, 'SUS_blended'),
+        (WindowSUS, 'SUS_window')
     ]
     gen_operators = [
+        (BlankGenOperator, 'no_operators'),
+        (Crossover, 'crossover'),
+        (Mutation, 'mutation'),
         (CrossoverAndMutation, 'xover_mut')
     ]
 else:
     fitness_functions = [
-        # (FconstALL(100), 'FconstALL'),
-        # (FHD(100, 100), 'FHD'),
-        # (Fx2(FloatEncoder(0.0, 10.23, 10)), 'Fx2'),
-        # (Fx2(FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fx2_gray'),
-        # (F5122subx2(FloatEncoder(-5.12, 5.11, 10)), 'F5122subx2'),
-        # (F5122subx2(FloatEncoder(-5.12, 5.11, 10, is_gray=True)), 'F5122subx2_gray'),
+        (FconstALL(100), 'FconstALL'),
+        (FHD(100, 100), 'FHD'),
+        (Fx2(FloatEncoder(0.0, 10.23, 10)), 'Fx2'),
+        (Fx2(FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fx2_gray'),
+        (F5122subx2(FloatEncoder(-5.12, 5.11, 10)), 'F5122subx2'),
+        (F5122subx2(FloatEncoder(-5.12, 5.11, 10, is_gray=True)), 'F5122subx2_gray'),
         (Fexp(0.25, FloatEncoder(0.0, 10.23, 10)), 'Fexp0.25'),
         (Fexp(0.25, FloatEncoder(0.0, 10.23, 10, is_gray=True)), 'Fexp0.25_gray'),
         (Fexp(1, FloatEncoder(0.0, 10.23, 10)), 'Fexp1'),
@@ -45,7 +66,7 @@ else:
         (WindowSUS, 'SUS_window')
     ]
     gen_operators = [
-        (BlankGenOperator, 'no_gen_op'),
+        (BlankGenOperator, 'no_operators'),
         (Crossover, 'crossover'),
         (Mutation, 'mutation'),
         (CrossoverAndMutation, 'xover_mut')
