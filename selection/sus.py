@@ -40,10 +40,6 @@ class SUS(SelectionMethod):
                     break
             current_fitness_pointer += fitness_step
 
-        # temporary warning check for the first run
-        if mating_pool.size != N:
-            print(f'Warning: basic SUS selected {mating_pool.size} children instead of N={N}!')
-
         return mating_pool
 
 
@@ -125,30 +121,3 @@ class WindowSUS(SelectionMethod):
 
         mating_pool = SUS.basic_sus(population, fitness_sum, fitness_scale)
         population.update_chromosomes(mating_pool)
-
-class MyBlendedSUS(SelectionMethod):
-    def __init__(self):
-        self.i = 0
-
-    def select(self, population: Population):
-        fitness_sum = 0
-        fitness_scale = []
-        f_worst = min(population.fitnesses)
-        j = G + 1 - self.i
-
-        for index, chromosome in enumerate(population.chromosomes):
-            f_scaled = self.i*(chromosome.fitness - f_worst) + j*(f_worst)
-            fitness_sum += f_scaled
-            if index == 0:
-                fitness_scale.append(f_scaled)
-            else:
-                fitness_scale.append(f_scaled + fitness_scale[index - 1])
-
-        if fitness_sum == 0:
-            fitness_sum = 0.0001 * N
-            fitness_scale = [0.0001 * (i+1) for i in range(N)]
-
-        mating_pool = SUS.basic_sus(population, fitness_sum, fitness_scale)
-        population.update_chromosomes(mating_pool)
-
-        self.i += 1

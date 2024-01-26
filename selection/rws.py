@@ -79,22 +79,3 @@ class WindowRWS(SelectionMethod):
         chosen = np.random.choice(population.chromosomes, size=N, p=probabilities)
         mating_pool = np.array([copy(chr) for chr in chosen])
         population.update_chromosomes(mating_pool)
-
-class MyBlendedRWS(SelectionMethod):
-    def __init__(self):
-        self.i = 0
-
-    def select(self, population):
-        f_worst = min(population.fitnesses)
-        j = G + 1 - self.i
-        f_scaled = [self.i*(fitness - f_worst) + j*(f_worst) for fitness in population.fitnesses]
-        fitness_sum = sum(f_scaled)
-
-        if fitness_sum == 0:
-            f_scaled = [0.0001 for _ in f_scaled]
-            fitness_sum = 0.0001 * N
-
-        probabilities = [fitness/fitness_sum for fitness in f_scaled]
-        chosen = np.random.choice(population.chromosomes, size=N, p=probabilities)
-        mating_pool = np.array([copy(chr) for chr in chosen])
-        population.update_chromosomes(mating_pool)
